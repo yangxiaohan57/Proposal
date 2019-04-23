@@ -1,0 +1,132 @@
+/*
+*Jingjing Sun & Xiaohan Yang
+*/
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Student implements Serializable {
+    private static final long serialVersionID = 1L;
+    int stuID;
+    String name;
+    int scores[];
+    double aver;
+    public Student () {
+        this.scores= new int[3] ;
+    }
+    public Student(int stuID, String name, int score1, int score2, int score3) {
+        this();
+        this.stuID = stuID;
+        this.name = name;
+        this.setScores(score1,score2,score3);
+        this.aver = (this.scores[0] + this.scores[1] + this.scores[2])/3;
+    }
+
+    public void setStuID(int stuID) {
+        this.stuID = stuID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setScores(int score1, int score2, int score3) {
+        this.scores[0] = score1;
+        this.scores[1] = score2;
+        this.scores[2] = score3;
+    }
+
+    public void setAver(double aver) {
+        this.aver = aver;
+    }
+     public static long getSerialVersionID() {
+        return serialVersionID;
+    }
+
+    public int getStuID() {
+        return stuID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+     public int[] getScores() {
+        return scores;
+    }
+ 
+
+    public double getAver() {
+        return aver;
+    }
+
+    @Override
+    public String toString() {
+        System.out.println("******");
+        System.out.println("Student");
+        return "PSU ID:" + stuID + ", Name:" + name +
+                ", Grade: IST140:" + scores[0]+",IST242:" +scores[1]+ ".IST 311:" + scores[2]+
+        ", Average Grade: " + aver;
+    }
+
+   
+    public static void main(String[] args) throws Exception {
+        HashMap<Integer, Student> stu = new HashMap<Integer, Student>();
+        File file = new File("Stu_info.obj");
+        Student Emma = new Student(101, "Emma Dodoo", 78, 85, 92);
+        Student Xiaohan = new Student(102, "Xiaohan Yang", 85, 87, 74);
+        Student Jingjing = new Student(103, "Jingjing Sun", 75, 98, 96);
+        Student Nilofar = new Student(104, "Nilofar", 93, 98, 93);
+        stu.put(001, Emma);
+        stu.put(002, Xiaohan);
+        stu.put(003, Jingjing);
+        stu.put(004, Nilofar);
+
+        
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        fos = new FileOutputStream(file);
+        oos = new ObjectOutputStream(fos);
+        oos.writeObject(new Inner(stu));
+        oos.flush();
+        oos.close();
+ 
+        
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        fis = new FileInputStream(file);
+        ois = new ObjectInputStream(fis);
+        Inner inner = null;
+        HashMap<Integer, Student> stuRead = null;
+        try {
+            inner = (Inner) ois.readObject();// ！！！！！！
+        } catch (EOFException e) {
+        }finally{
+            ois.close();
+        }
+        stuRead = inner.stu;
+ 
+        
+        for (Map.Entry<Integer, Student> item : stuRead.entrySet()) {
+            System.out.println(item.getValue());
+        }
+    }
+}
+ 
+class Inner implements Serializable {
+   
+    private static final long serialVersionUID = 1L;
+    HashMap<Integer, Student> stu;
+ 
+    public Inner(HashMap<Integer, Student> stu) {
+        this.stu = stu;
+    
+}
+}
+  
