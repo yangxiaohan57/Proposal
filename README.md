@@ -1,5 +1,5 @@
 # Proposal
-Xiaohan Yang, Jingjing Sun
+Xiaohan Yang, Jingjing Sun, Emma Dodoo, Niloofar Yadzani
 
 Here is our activity proposal:
 
