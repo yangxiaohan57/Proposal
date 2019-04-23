@@ -82,11 +82,12 @@ public class Student implements Serializable {
         Student Emma = new Student(101, "Emma Dodoo", 78, 85, 92);
         Student Xiaohan = new Student(102, "Xiaohan Yang", 85, 87, 74);
         Student Jingjing = new Student(103, "Jingjing Sun", 75, 98, 96);
-        Student Nilofar = new Student(104, "Nilofar", 93, 98, 93);
+        Student Niloofar = new Student(104, "Niloofar", 100, 98, 100);
+
         stu.put(001, Emma);
         stu.put(002, Xiaohan);
         stu.put(003, Jingjing);
-        stu.put(004, Nilofar);
+        stu.put(004, Niloofar);
 
         
         FileOutputStream fos = null;
